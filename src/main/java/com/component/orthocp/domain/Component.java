@@ -1,4 +1,6 @@
 package com.component.orthocp.domain;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -15,6 +17,13 @@ public class Component {
     private String description;
     private String draw;
     private String binlocation;
+
+    public Component(String binlocation, String code, String description, String draw) {
+        this.binlocation = binlocation;
+        this.code = code;
+        this.description = description; 
+        this.draw = draw;
+    }
 
     public Long getId() {
         return id;
@@ -47,6 +56,9 @@ public class Component {
         this.binlocation = binlocation;
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(obj, this);
+    }
     
 }
