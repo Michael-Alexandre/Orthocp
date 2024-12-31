@@ -1,8 +1,12 @@
 package com.component.orthocp.domain;
 
 import static com.component.orthocp.common.ComponentConstants.COMPONENT;
+import static com.component.orthocp.common.ComponentConstants.INVALID_COMPONENT;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,8 +34,30 @@ public class ComponentServiceTest {
         // sut = system under test; A = act
         Component sut = componentService.create(COMPONENT);
         // a = assert
-        assertThat(sut).isEqualTo(COMPONENT);
-        
+        assertThat(sut).isEqualTo(COMPONENT);        
     }
 
+    @Test
+    public void createComponent_invalid_ThrowsException() {
+        when(componentRepository.save(INVALID_COMPONENT)).thenThrow(RuntimeException.class);
+
+        assertThatThrownBy(() -> componentService.create(INVALID_COMPONENT)).isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    public void getComponent_validId_returnPlanet() {
+        when(componentRepository.findById(1L)).thenReturn(Optional.of(COMPONENT));
+        Optional<Component> sut = componentService.get(1L);
+        
+        assertThat(sut).isNotEmpty();
+        assertThat(sut.get()).isEqualTo(COMPONENT);
+    }
+
+    @Test
+    public void getComponent_invalidId_returnEmpty() {
+        when(componentRepository.findById(1L)).thenReturn(Optional.empty());
+        Optional<Component> sut = componentService.get(1L);
+        
+        assertThat(sut).isEmpty();
+    }
 }

@@ -1,5 +1,7 @@
 package com.component.orthocp.domain;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,4 +15,9 @@ public class ComponentService {
     public Component create(Component component) {
         return componentRepository.save(component);
     }
+
+    public Optional<Component> get(Long id) {
+        return componentRepository.findById(id);
+    }
+
 }
