@@ -20,4 +20,8 @@ public class ComponentService {
         return componentRepository.findById(id);
     }
 
+    public Optional<Component> getByCode(String code) {
+        return componentRepository.findByCode(code);
+    }
+
 }

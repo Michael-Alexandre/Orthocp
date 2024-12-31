@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/components")
+@RequestMapping("/component")
 public class ComponentController {
     @Autowired
     private ComponentService componentService;
@@ -27,9 +27,15 @@ public class ComponentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(componentCreated);
     }
     
-    @GetMapping("/component/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Component> get(@PathVariable("id") Long id) {
         return componentService.get(id).map(component -> ResponseEntity.ok(component))
+            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Component> getByCode(@PathVariable("code") String code) {
+        return componentService.getByCode(code).map(component -> ResponseEntity.ok(component))
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 

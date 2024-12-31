@@ -60,4 +60,22 @@ public class ComponentServiceTest {
         
         assertThat(sut).isEmpty();
     }
+
+    @Test
+    public void getComponent_validCode_returnPlanet() {
+        when(componentRepository.findByCode("code")).thenReturn(Optional.of(COMPONENT));
+        Optional<Component> sut = componentService.getByCode("code");
+        
+        assertThat(sut).isNotEmpty();
+        assertThat(sut.get()).isEqualTo(COMPONENT);
+    }
+
+    @Test
+    public void getComponent_invalidCode_returnEmpty() {
+        when(componentRepository.findByCode("invalid code")).thenReturn(Optional.empty());
+        Optional<Component> sut = componentService.getByCode("invalid code");
+        
+        assertThat(sut).isEmpty();
+    }
+
 }
