@@ -4,8 +4,12 @@ import static com.component.orthocp.common.ComponentConstants.COMPONENT;
 import static com.component.orthocp.common.ComponentConstants.INVALID_COMPONENT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import com.component.orthocp.domain.QueryBuilder;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Example;
 
 @ExtendWith(MockitoExtension.class)
 // menos eficiente @SpringBootTest(classes = ComponentService.class)
@@ -74,6 +79,27 @@ public class ComponentServiceTest {
     public void getComponent_invalidCode_returnEmpty() {
         when(componentRepository.findByCode("invalid code")).thenReturn(Optional.empty());
         Optional<Component> sut = componentService.getByCode("invalid code");
+        
+        assertThat(sut).isEmpty();
+    }
+
+    @Test
+    public void listComponent_returnAll() {
+        List<Component> components = List.of(COMPONENT);
+        when(componentRepository.findAll(any())).thenReturn(components);
+
+        List<Component> sut = componentService.list(COMPONENT.getCode(), COMPONENT.getDescription());
+
+        assertThat(sut).isNotEmpty();
+        assertThat(sut).hasSize(1);
+        assertThat(sut).contains(COMPONENT);
+    }
+
+    @Test
+    public void listComponent_returnEmpty() {
+        when(componentRepository.findAll(any())).thenReturn(Collections.emptyList());
+
+        List<Component> sut = componentService.list(COMPONENT.getCode(), COMPONENT.getDescription());
         
         assertThat(sut).isEmpty();
     }
