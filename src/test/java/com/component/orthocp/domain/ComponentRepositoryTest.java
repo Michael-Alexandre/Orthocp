@@ -1,6 +1,7 @@
 package com.component.orthocp.domain;
 import static com.component.orthocp.common.ComponentConstants.COMPONENT;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,15 @@ public class ComponentRepositoryTest {
         assertThat(sut.getDraw()).isEqualTo(COMPONENT.getDraw());
         assertThat(sut.getCode()).isEqualTo(COMPONENT.getCode());
         assertThat(sut.getBinlocation()).isEqualTo(COMPONENT.getBinlocation());
-        assertThat(sut.getDescription()).isEqualTo(COMPONENT.getDescription());
-        
+        assertThat(sut.getDescription()).isEqualTo(COMPONENT.getDescription());        
+    }
+
+    @Test
+    public void createComponent_InvalidComponent_throwException() {
+        Component emptyComponent = new Component(null, null, null, null);
+        Component invalidComponent = new Component("", "", "", "");
+
+        assertThatThrownBy(() -> componentRepository.save(emptyComponent));
+        assertThatThrownBy(() -> componentRepository.save(invalidComponent));
     }
 }

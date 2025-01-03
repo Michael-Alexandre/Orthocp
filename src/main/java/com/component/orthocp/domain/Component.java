@@ -1,8 +1,10 @@
 package com.component.orthocp.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +15,18 @@ public class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String code;
+    @NotEmpty
+    @Column(nullable = false)
     private String description;
+    @NotEmpty
+    @Column(nullable = false)
     private String draw;
+    @NotEmpty
+    @Column(nullable = false)
     private String binlocation;
 
     public Component(String binlocation, String code, String description, String draw) {
