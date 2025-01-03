@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import com.component.orthocp.domain.QueryBuilder;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -20,7 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Example;
 
 @ExtendWith(MockitoExtension.class)
 // menos eficiente @SpringBootTest(classes = ComponentService.class)
