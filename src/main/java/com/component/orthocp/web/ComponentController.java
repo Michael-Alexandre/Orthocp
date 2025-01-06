@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.component.orthocp.domain.Component;
 import com.component.orthocp.domain.ComponentService;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +26,7 @@ public class ComponentController {
     private ComponentService componentService;
 
     @PostMapping
-    public ResponseEntity<Component> create(@RequestBody Component component) {
+    public ResponseEntity<Component> create(@RequestBody @Valid Component component) {
         //process POST request
         Component componentCreated = componentService.create(component);
         return ResponseEntity.status(HttpStatus.CREATED).body(componentCreated);

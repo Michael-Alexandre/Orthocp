@@ -17,7 +17,7 @@ public class Component {
     private Long id;
 
     @NotEmpty
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String code;
     @NotEmpty
     @Column(nullable = false)
